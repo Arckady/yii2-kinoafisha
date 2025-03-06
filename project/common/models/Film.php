@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "film".
@@ -14,22 +14,12 @@ use Yii;
  * @property int|null $duration Продолжительность
  * @property int|null $age_rating Возрастное огранечение
  */
-class Film extends \yii\db\ActiveRecord
+class Film extends ActiveRecord
 {
-
-
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
-        return 'film';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['duration', 'age_rating'], 'default', 'value' => null],
@@ -45,7 +35,7 @@ class Film extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',

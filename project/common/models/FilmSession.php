@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "film_session".
@@ -14,7 +16,7 @@ use Yii;
  *
  * @property Film $film
  */
-class FilmSession extends \yii\db\ActiveRecord
+class FilmSession extends ActiveRecord
 {
 
 
@@ -29,7 +31,7 @@ class FilmSession extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['film_id', 'datetime', 'cost'], 'default', 'value' => null],
@@ -42,7 +44,7 @@ class FilmSession extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -57,7 +59,7 @@ class FilmSession extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getFilm()
+    public function getFilm(): ActiveQuery
     {
         return $this->hasOne(Film::class, ['id' => 'film_id']);
     }

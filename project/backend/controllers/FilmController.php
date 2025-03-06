@@ -2,11 +2,13 @@
 
 namespace backend\controllers;
 
+use backend\models\FilmForm;
 use common\models\Film;
 use common\models\FilmSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * FilmController implements the CRUD actions for Film model.
@@ -65,20 +67,18 @@ class FilmController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate(): string|Response
     {
-        $model = new Film();
+        $form = new FilmForm();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($form->load($this->request->post()) && $result = $form->saveAndReturnModel()) {
+                return $this->redirect(['view', 'id' => $result->id]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'model' => $form,
         ]);
     }
 
