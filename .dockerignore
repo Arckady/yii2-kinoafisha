@@ -1,0 +1,13 @@
+# исключаем то что не должно попасть ни в один контейнер
+.idea
+.git
+/volumes
+!/volumes/build
+/project/vendor
+/project/volumes
+/public/build
+/public/bundles
+/project/tests
+/project/var
+docker-compose.*.yml
+docker-compose.yml

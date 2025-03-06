@@ -1,0 +1,72 @@
+version: "3"
+
+services:
+
+  frontend:
+    build:
+      context: ./docker/frontend
+    volumes:
+      - ./project:/project
+    container_name: ${APP_NAME}-frontend-nginx
+#    restart: always
+    ports:
+      - "8094:80"
+    command: nginx -g 'daemon off;'
+
+  backend:
+    build:
+      context: ./docker/backend
+    volumes:
+      - ./project:/project
+    container_name: ${APP_NAME}-backend-nginx
+#    restart: always
+    ports:
+      - "8095:80"
+    command: nginx -g 'daemon off;'
+
+  php-fpm:
+    env_file: "./project/.env"
+    build:
+      context: ./docker/php-fpm
+    environment:
+      PHP_IDE_CONFIG: "serverName=kinoafisha"
+    volumes:
+      - ./project:/project
+      # при изменении настроек в project.ini нужен `make restart`
+      - ./docker/php-fpm/project.ini:/usr/local/etc/php/conf.d/project.ini
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    container_name: ${APP_NAME}-php-fpm
+#    restart: always
+    depends_on:
+      - db
+
+  php-cli:
+    env_file: "./project/.env"
+    build:
+      context: ./docker/php-cli
+    volumes:
+      - ./project:/project
+      # при изменении настроек в project.ini нужен `make restart`
+      - ./docker/php-cli/project.ini:/usr/local/etc/php/conf.d/project.ini
+    command: sleep 10000
+#    restart: always
+    container_name: ${APP_NAME}-php-cli
+
+  db:
+    container_name: ${APP_NAME}-db
+    image: mariadb:10.3
+    volumes:
+      - ./volumes/db/mysql://var/lib/mysql
+    ports:
+      - "3320:3306"
+    restart: always
+    environment:
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_USER=${DATABASE_USER}
+      - MYSQL_DATABASE=${DATABASE_NAME}
+      - MARIADB_ROOT_PASSWORD=${DATABASE_ROOT}
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+
+volumes:
+  yii2-kinoafisha-db:
