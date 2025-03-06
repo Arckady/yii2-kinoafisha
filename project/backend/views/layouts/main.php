@@ -30,16 +30,13 @@ $this->registerJsFile($publishedRes[1].'/control_sidebar.js', ['depends' => '\ha
 
 <div class="wrapper">
 
-    <!-- Main Sidebar Container -->
+    <?= $this->render('navbar', ['assetDir' => $assetDir]) ?>
+
     <?= $this->render('sidebar', ['assetDir' => $assetDir]) ?>
 
-    <!-- Content Wrapper. Contains page content -->
     <?= $this->render('content', ['content' => $content, 'assetDir' => $assetDir]) ?>
-    <!-- /.content-wrapper -->
 
-    <!-- Control Sidebar -->
     <?= $this->render('control-sidebar') ?>
-    <!-- /.control-sidebar -->
 
 </div>
 

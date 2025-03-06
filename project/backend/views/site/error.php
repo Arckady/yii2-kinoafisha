@@ -18,10 +18,6 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
             <?= nl2br(Html::encode($message)) ?>
         </p>
 
-        <p>
-            Проверьте правильность написания адреса
-        </p>
-
     </div>
 </div>
 
