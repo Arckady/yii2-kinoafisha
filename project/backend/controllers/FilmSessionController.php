@@ -2,16 +2,16 @@
 
 namespace backend\controllers;
 
-use common\models\Film;
-use common\models\FilmSearch;
+use common\models\FilmSession;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * FilmController implements the CRUD actions for Film model.
+ * FilmSessionController implements the CRUD actions for FilmSession model.
  */
-class FilmController extends Controller
+class FilmSessionController extends Controller
 {
     /**
      * @inheritDoc
@@ -22,7 +22,7 @@ class FilmController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::class,
+                    'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -32,23 +32,33 @@ class FilmController extends Controller
     }
 
     /**
-     * Lists all Film models.
+     * Lists all FilmSession models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new FilmSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => FilmSession::find(),
+            /*
+            'pagination' => [
+                'pageSize' => 50
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+            */
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Film model.
+     * Displays a single FilmSession model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,13 +71,13 @@ class FilmController extends Controller
     }
 
     /**
-     * Creates a new Film model.
+     * Creates a new FilmSession model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Film();
+        $model = new FilmSession();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -83,7 +93,7 @@ class FilmController extends Controller
     }
 
     /**
-     * Updates an existing Film model.
+     * Updates an existing FilmSession model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -103,7 +113,7 @@ class FilmController extends Controller
     }
 
     /**
-     * Deletes an existing Film model.
+     * Deletes an existing FilmSession model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -117,15 +127,15 @@ class FilmController extends Controller
     }
 
     /**
-     * Finds the Film model based on its primary key value.
+     * Finds the FilmSession model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Film the loaded model
+     * @return FilmSession the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Film::findOne(['id' => $id])) !== null) {
+        if (($model = FilmSession::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

@@ -34,6 +34,7 @@ class Film extends \yii\db\ActiveRecord
         return [
             [['duration', 'age_rating'], 'default', 'value' => null],
             [['title', 'image_extension', 'description'], 'required'],
+            [['title', 'description'], 'filter', 'filter' => 'strip_tags'],
             [['description'], 'string'],
             [['duration', 'age_rating'], 'integer'],
             [['title'], 'string', 'max' => 255],
