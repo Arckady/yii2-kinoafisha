@@ -11,24 +11,21 @@ use common\models\Film;
  */
 class FilmSearch extends Film
 {
+    public $image;
+    public static function tableName(): string
+    {
+        return '{{%film}}';
+    }
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['id', 'duration', 'age_rating'], 'integer'],
             [['title', 'image_extension', 'description'], 'safe'],
+            [['image'], 'safe']
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
     }
 
     /**
@@ -42,8 +39,6 @@ class FilmSearch extends Film
     public function search($params, $formName = null)
     {
         $query = Film::find();
-
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

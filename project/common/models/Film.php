@@ -2,7 +2,11 @@
 
 namespace common\models;
 
+use backend\behaviors\FilmBehavior;
+use backend\models\FilmForm;
+use common\DTO\FilmImageDTO;
 use yii\db\ActiveRecord;
+use yii\helpers\FileHelper;
 
 /**
  * This is the model class for table "film".
@@ -16,6 +20,15 @@ use yii\db\ActiveRecord;
  */
 class Film extends ActiveRecord
 {
+    const UPLOAD_DIRECTORY = "@frontend/web/uploads/";
+
+    public function behaviors(): array
+    {
+        return [
+            FilmBehavior::class,
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -47,4 +60,18 @@ class Film extends ActiveRecord
         ];
     }
 
+    public function fillFromForm(FilmForm $form): void
+    {
+        $this->title = $form->title;
+        $this->description = $form->description;
+        $this->duration = $form->duration;
+        $this->age_rating = $form->age_rating;
+    }
+
+    public function afterDelete(): void
+    {
+        parent::afterDelete();
+        $imageDTO = FilmImageDTO::createFromModel($this);
+        FileHelper::unlink(\Yii::getAlias($imageDTO->filePath));
+    }
 }

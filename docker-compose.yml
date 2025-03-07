@@ -8,7 +8,7 @@ services:
     volumes:
       - ./project:/project
     container_name: ${APP_NAME}-frontend-nginx
-#    restart: always
+    restart: always
     ports:
       - "8094:80"
     command: nginx -g 'daemon off;'
@@ -19,7 +19,7 @@ services:
     volumes:
       - ./project:/project
     container_name: ${APP_NAME}-backend-nginx
-#    restart: always
+    restart: always
     ports:
       - "8095:80"
     command: nginx -g 'daemon off;'
@@ -37,7 +37,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     container_name: ${APP_NAME}-php-fpm
-#    restart: always
+    restart: always
     depends_on:
       - db
 
@@ -50,7 +50,7 @@ services:
       # при изменении настроек в project.ini нужен `make restart`
       - ./docker/php-cli/project.ini:/usr/local/etc/php/conf.d/project.ini
     command: sleep 10000
-#    restart: always
+    restart: always
     container_name: ${APP_NAME}-php-cli
 
   db:

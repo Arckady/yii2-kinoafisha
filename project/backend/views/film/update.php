@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var common\models\Film $model */
+/** @var string|null $imagePath */
 
 $this->title = 'Update Film: ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Films', 'url' => ['index']];
@@ -16,6 +17,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'imagePath' => $imagePath
     ]) ?>
 
 </div>

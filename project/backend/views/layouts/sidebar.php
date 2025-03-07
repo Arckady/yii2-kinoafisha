@@ -13,7 +13,7 @@ use hail812\adminlte\widgets\Menu;
             echo Menu::widget([
                 'items' => [
                     ['label' => 'Панель навигации ', 'header' => true],
-                    ['label' => 'Список фильмов',  'icon' => 'video', 'url' => ['/']],
+                    ['label' => 'Список фильмов',  'icon' => 'video', 'url' => ['/film']],
                     ['label' => 'Список киносеансов',  'icon' => 'film', 'url' => ['/']],
                     ['label' => 'Добавить фильм', 'icon' => 'plus', 'url' => ['/film/create']],
                     ['label' => 'Добавить киносеанс', 'icon' => 'plus', 'url' => ['/']],

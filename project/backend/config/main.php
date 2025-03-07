@@ -11,7 +11,11 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'gridview' =>  [
+            'class' => '\kartik\grid\Module'
+        ]
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
@@ -49,6 +53,12 @@ return [
             'showScriptName' => false,
             'rules' => [
             ],
+        ],
+        'urlManagerFrontend' => [
+            'class' => 'yii\web\urlManager',
+            'baseUrl' => 'http://localhost:8094/',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
         ],
     ],
     'params' => $params,

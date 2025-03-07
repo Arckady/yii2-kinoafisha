@@ -2,22 +2,26 @@
 
 namespace backend\models;
 
+use common\DTO\FilmImageDTO;
 use common\models\Film;
 use Yii;
+use yii\base\ErrorException;
+use yii\base\Exception;
 use yii\base\Model;
-use yii\db\Exception;
 use yii\web\UploadedFile;
 
 /**
- * @property string $title
- * @property string $imageFile Файл изображения
- * @property string $description
+ * @property int|null $id
+ * @property string|null $title
+ * @property string|null $imageFile Файл изображения
+ * @property string|null $description
  * @property int|null $duration Продолжительность
  * @property int|null $age_rating Возрастное огранечение
  */
 
 class FilmForm extends Model
 {
+    public ?int $id = null;
     public ?string $title = null;
     public ?string $imageFile = null;
     public ?string $description = null;
@@ -51,26 +55,33 @@ class FilmForm extends Model
         ];
     }
 
-    public function saveAndReturnModel(): Film
+    public function saveFilm(?int $id = null): void
     {
-        $model = new Film();
+        $model = $id ? Film::findOne($id) : new Film();
+        $model->fillFromForm($this);
 
-        $model->title = $this->title;
-        $model->duration = $this->duration;
-        $model->description = $this->description;
-        $model->age_rating = $this->age_rating;
-        $file = UploadedFile::getInstance($this, 'imageFile');
-        $model->image_extension = $file->extension;
+        $imageDTO =  FilmImageDTO::createFromFile(UploadedFile::getInstance($this, 'imageFile'));
+        $model->image_extension = $imageDTO->extension;
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $model->save();
-            $file->saveAs('@frontend/web/uploads/' . $model->id . '.' . $file->extension);
+            $imageDTO->saveFile($model);
             $transaction->commit();
-        } catch(Exception) {
+        } catch(ErrorException) {
             $transaction->rollBack();
+            throw new \Exception('Не удалось сохранить информацию о фильме', 500);
         }
+    }
 
-        return $model;
+    public function fillForm(Film $model): void
+    {
+        $imageDTO =  FilmImageDTO::createFromModel($model);
+
+        $this->title = $model->title;
+        $this->description = $model->description;
+        $this->duration = $model->duration;
+        $this->age_rating = $model->age_rating;
+        $this->imageFile = $imageDTO->id . '.' . $imageDTO->extension;
     }
 }

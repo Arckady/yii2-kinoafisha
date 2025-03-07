@@ -38,7 +38,7 @@ class FilmController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $searchModel = new FilmSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
@@ -55,7 +55,7 @@ class FilmController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView(int $id): string
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -71,10 +71,9 @@ class FilmController extends Controller
     {
         $form = new FilmForm();
 
-        if ($this->request->isPost) {
-            if ($form->load($this->request->post()) && $result = $form->saveAndReturnModel()) {
-                return $this->redirect(['view', 'id' => $result->id]);
-            }
+        if ($this->request->isPost && $form->load($this->request->post())) {
+            $form->saveFilm();
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -89,16 +88,21 @@ class FilmController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate(int $id): string|Response
     {
         $model = $this->findModel($id);
+        $form = new FilmForm();
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $form->load($this->request->post())) {
+            $form->saveFilm($id);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $form->fillForm($model);
+
         return $this->render('update', [
-            'model' => $model,
+            'model' => $form,
+            'imagePath' => \Yii::$app->urlManagerFrontend->createUrl('uploads') . '/' . $form->imageFile
         ]);
     }
 
@@ -109,7 +113,7 @@ class FilmController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($id): Response
     {
         $this->findModel($id)->delete();
 
@@ -123,7 +127,7 @@ class FilmController extends Controller
      * @return Film the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel(int $id): ?Film
     {
         if (($model = Film::findOne(['id' => $id])) !== null) {
             return $model;

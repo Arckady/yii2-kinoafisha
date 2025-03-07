@@ -1,11 +1,14 @@
 <?php
 
+use kartik\file\FileInput;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var backend\models\FilmForm $model */
 /** @var yii\widgets\ActiveForm $form */
+/** @var string|null $imagePath */
+
 ?>
 
 <div class="film-form">
@@ -14,7 +17,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'imageFile')->fileInput() ?>
+    <?= $form->field($model, 'imageFile')->widget(FileInput::class, [
+        'options' => ['accept' => 'image/*'],
+        'pluginOptions' => [
+            'initialPreview' => [$imagePath ?? null],
+            'initialPreviewAsData' => true,
+        ]
+    ]) ?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
