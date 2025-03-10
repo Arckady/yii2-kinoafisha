@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\FilmSession $model */
 
-$this->title = 'Create Film Session';
-$this->params['breadcrumbs'][] = ['label' => 'Film Sessions', 'url' => ['index']];
+$this->title = 'Добавить киносеанс';
+$this->params['breadcrumbs'][] = ['label' => 'Киносеанс', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="film-session-create">
