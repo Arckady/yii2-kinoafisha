@@ -23,7 +23,7 @@ docker-build-no-pull:
 cli:
 	cd project && docker compose run --rm php-cli bash
 
-app-composer-install:
+composer-install:
 	cd project && docker compose run --rm php-cli composer install
 
 app-init:
