@@ -1,6 +1,7 @@
 init: docker-down \
 	docker-pull docker-build docker-up \
-	app-composer-install
+	app-composer-install migrations \
+	fill-db copy-files
 up: docker-up
 down: docker-down
 restart: down up
@@ -32,3 +33,9 @@ app-init:
 
 migrations:
 	cd project && docker compose run --rm php-cli php yii migrate
+
+fill-db:
+	cd project && docker compose run --rm php-cli php yii fixture "*"
+
+copy-files:
+	cp pictures/* project/frontend/web/uploads
