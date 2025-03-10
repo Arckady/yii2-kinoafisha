@@ -102,7 +102,7 @@ class FilmController extends Controller
 
         return $this->render('update', [
             'model' => $form,
-            'imagePath' => \Yii::$app->urlManagerFrontend->createUrl('uploads') . '/' . $form->imageFile
+            'imagePath' => \Yii::$app->urlManagerFrontend->createUrl(Film::IMAGE_PATH) . '/' . $form->imageFile
         ]);
     }
 

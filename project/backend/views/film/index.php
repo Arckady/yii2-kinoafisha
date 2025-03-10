@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'image',
                 'label' => 'Изображение',
                 'value' => function(Film $model) {
-                    $imagePath = \Yii::$app->urlManagerFrontend->createUrl('uploads') . '/' . $model->id . "." . $model->image_extension;
+                    $imagePath = \Yii::$app->urlManagerFrontend->createUrl($model::IMAGE_PATH) . '/' . $model->id . "." . $model->image_extension;
                     return '<img src="' . $imagePath . '" style="width: 50px" alt="Фото">';
                 },
                 'format' => 'html'

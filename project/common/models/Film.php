@@ -21,6 +21,7 @@ use yii\helpers\FileHelper;
 class Film extends ActiveRecord
 {
     const UPLOAD_DIRECTORY = "@frontend/web/uploads/";
+    const IMAGE_PATH = "/uploads/";
 
     public function behaviors(): array
     {
@@ -72,6 +73,6 @@ class Film extends ActiveRecord
     {
         parent::afterDelete();
         $imageDTO = FilmImageDTO::createFromModel($this);
-        FileHelper::unlink(\Yii::getAlias($imageDTO->filePath));
+        FileHelper::unlink(\Yii::getAlias($imageDTO->absFilePath));
     }
 }

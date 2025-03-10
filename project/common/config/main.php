@@ -1,5 +1,6 @@
 <?php
 return [
+    'name' => 'Кинотеатр',
     'language' => 'ru_RU',
     'sourceLanguage' => 'ru_RU',
     'aliases' => [

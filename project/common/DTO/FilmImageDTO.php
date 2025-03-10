@@ -9,7 +9,8 @@ class FilmImageDTO
 {
     private function __construct(
         public string $extension,
-        public ?string $filePath = null,
+        public ?string $absFilePath = null,
+        public ?string $relativeFilePath = null,
         public ?int $id = null,
         public ?UploadedFile $file = null
     )
@@ -19,7 +20,8 @@ class FilmImageDTO
     {
         return new self(
             $film->image_extension,
-            filePath: $film::UPLOAD_DIRECTORY . $film->id . '.' . $film->image_extension,
+            absFilePath: $film::UPLOAD_DIRECTORY . $film->id . '.' . $film->image_extension,
+            relativeFilePath: $film::IMAGE_PATH . $film->id . '.' . $film->image_extension,
             id: $film->id
         );
     }

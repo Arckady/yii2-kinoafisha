@@ -1,52 +1,27 @@
 <?php
 
+use common\DTO\FilmImageDTO;
+use common\models\FilmSession;
+
 /** @var yii\web\View $this */
+/** @var FilmSession[] $sessions */
+/** @var FilmSession $session */
 
-$this->title = 'My Yii Application';
+$this->title = 'Кинотеатр';
 ?>
-<div class="site-index">
-    <div class="p-5 mb-4 bg-transparent rounded-3">
-        <div class="container-fluid py-5 text-center">
-            <h1 class="display-4">Congratulations!</h1>
-            <p class="fs-5 fw-light">You have successfully created your Yii-powered application.</p>
-            <p><a class="btn btn-lg btn-success" href="https://www.yiiframework.com">Get started with Yii</a></p>
+
+<div class="row gx-5">
+    <?php foreach ($sessions as $session): ?>
+    <?php $imageDTO = FilmImageDTO::createFromModel($session->film) ?>
+    <div class="col-4">
+        <div class="p-3" style="backgroung-image: <?= $imageDTO->relativeFilePath ?>">
+            <img src="<?= Yii::getAlias($imageDTO->relativeFilePath) ?>"  class="img-thumbnail" alt="<?= $session->film->title ?>">
+            <p class="mb-0">Фильм: <?= $session->film->title ?></p>
+            <p class="mb-0">Продолжительность: <?= $session->film->duration ?></p>
+            <p class="mb-0">Стоимость: <?= $session->cost ?> ₽</p>
+            <p class="mb-0">Начало: <?= $session->datetime ?></p>
+            <p class="mb-0">Возрастное ограничение: <?= $session->film->age_rating ?></p>
         </div>
     </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
-    </div>
+    <?php endforeach; ?>
 </div>
