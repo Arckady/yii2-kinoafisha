@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 /** @var common\models\FilmSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Films';
+$this->title = 'Фильмы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="film-index">
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Film', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать фильм', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>

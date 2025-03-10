@@ -34,11 +34,23 @@ class FilmSession extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['film_id', 'datetime', 'cost'], 'default', 'value' => null],
+            [['film_id', 'datetime', 'cost'], 'required'],
             [['film_id', 'cost'], 'integer'],
-            [['datetime'], 'safe'],
+            [['datetime'], 'validateDatetime'],
             [['film_id'], 'exist', 'skipOnError' => true, 'targetClass' => Film::class, 'targetAttribute' => ['film_id' => 'id']],
         ];
+    }
+
+    public function validateDatetime($attribute, $params)
+    {
+        $sessionBegin =  new \DateTimeImmutable($this->$attribute);
+        $sessionEnd = $sessionBegin->modify('+' . $this->film->duration . ' minutes');
+        $timeLockFrom = $sessionBegin->modify('-30 minutes')->format('Y-m-d H:i:s');
+        $timeLockTo = $sessionEnd->modify('+30 minutes')->format('Y-m-d H:i:s');
+        $sessionInInterval = self::find()->where(['between', 'datetime', $timeLockFrom, $timeLockTo])->one();
+        if ($sessionInInterval) {
+            $this->addError($attribute, 'Наложение по времени с другим сеансом');
+        }
     }
 
     /**
@@ -48,9 +60,9 @@ class FilmSession extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'film_id' => 'Film ID',
+            'film_id' => 'Фильм',
             'datetime' => 'Время начала сеанса',
-            'cost' => 'Стоимость в копейках',
+            'cost' => 'Стоимость, ₽',
         ];
     }
 
@@ -64,4 +76,24 @@ class FilmSession extends ActiveRecord
         return $this->hasOne(Film::class, ['id' => 'film_id']);
     }
 
+    public static function getArrayFilms(): array
+    {
+        return Film::find()->select(['title', 'id'])->indexBy('id')->column();
+    }
+
+    public function afterFind(): void
+    {
+        parent::afterFind();
+        $this->cost /= 100;
+    }
+
+    public function beforeSave($insert): bool
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        $this->cost *= 100;
+        return true;
+    }
 }

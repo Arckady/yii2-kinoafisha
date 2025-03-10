@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\FilmSession $model */
 
-$this->title = 'Update Film Session: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Film Sessions', 'url' => ['index']];
+$this->title = 'Обновить киносеанс: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Киносеансы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Обновить';
 ?>
 <div class="film-session-update">
 

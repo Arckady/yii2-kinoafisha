@@ -9,7 +9,7 @@ use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Film Sessions';
+$this->title = 'Киносеансы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="film-session-index">
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Film Session', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать киносеанс', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -25,14 +25,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'film_id',
+            [
+                'attribute' => 'film_id',
+                'label' => 'Фильм',
+                'value' => function ($model) {
+                    return $model->film->title;
+                }
+            ],
             'datetime',
             'cost',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, FilmSession $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

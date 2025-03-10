@@ -35,7 +35,7 @@ use yii\bootstrap4\Breadcrumbs;
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <div class="content">
+    <div class="content" style="display: flex; justify-content: center;">
         <?= $content ?><!-- /.container-fluid -->
     </div>
     <!-- /.content -->

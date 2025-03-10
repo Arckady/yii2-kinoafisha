@@ -1,13 +1,14 @@
 <?php
 
+use common\models\FilmSession;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
 /** @var common\models\FilmSession $model */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Film Sessions', 'url' => ['index']];
+$this->title = $model->film->title;
+$this->params['breadcrumbs'][] = ['label' => 'Киносеансы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -16,11 +17,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Обновить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы уверены?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -29,8 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'film_id',
+            [
+                'attribute' => 'film_id',
+                'label' => 'Фильм',
+                'value' => function (FilmSession $model) {
+                    return $model->film->title;
+                }
+            ],
             'datetime',
             'cost',
         ],

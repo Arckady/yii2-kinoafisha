@@ -55,7 +55,7 @@ class Film extends ActiveRecord
             'title' => 'Заголовок',
             'image_extension' => 'Расширение файла изображения',
             'description' => 'Описание',
-            'duration' => 'Продолжительность',
+            'duration' => 'Продолжительность, минуты',
             'age_rating' => 'Возрастное огранечение',
         ];
     }

@@ -14,9 +14,9 @@ use hail812\adminlte\widgets\Menu;
                 'items' => [
                     ['label' => 'Панель навигации ', 'header' => true],
                     ['label' => 'Список фильмов',  'icon' => 'video', 'url' => ['/film']],
-                    ['label' => 'Список киносеансов',  'icon' => 'film', 'url' => ['/']],
+                    ['label' => 'Список киносеансов',  'icon' => 'film', 'url' => ['/film-session']],
                     ['label' => 'Добавить фильм', 'icon' => 'plus', 'url' => ['/film/create']],
-                    ['label' => 'Добавить киносеанс', 'icon' => 'plus', 'url' => ['/']],
+                    ['label' => 'Добавить киносеанс', 'icon' => 'plus', 'url' => ['/film-session/create']],
                 ],
             ]);
             ?>

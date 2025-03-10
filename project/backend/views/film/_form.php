@@ -19,6 +19,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'imageFile')->widget(FileInput::class, [
         'options' => ['accept' => 'image/*'],
+        'language' => 'ru',
         'pluginOptions' => [
             'initialPreview' => [$imagePath ?? null],
             'initialPreviewAsData' => true,

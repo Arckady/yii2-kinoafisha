@@ -22,7 +22,7 @@ class FilmSessionController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -40,16 +40,14 @@ class FilmSessionController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => FilmSession::find(),
-            /*
             'pagination' => [
-                'pageSize' => 50
+                'pageSize' => 20
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'id' => SORT_DESC,
+                    'datetime' => SORT_DESC,
                 ]
             ],
-            */
         ]);
 
         return $this->render('index', [

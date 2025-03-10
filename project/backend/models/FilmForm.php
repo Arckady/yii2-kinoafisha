@@ -50,7 +50,7 @@ class FilmForm extends Model
             'title' => 'Заголовок',
             'imageFile' => 'Файл изображения',
             'description' => 'Описание',
-            'duration' => 'Продолжительность',
+            'duration' => 'Продолжительность, минуты',
             'age_rating' => 'Возрастное огранечение',
         ];
     }
